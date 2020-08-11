@@ -9,14 +9,13 @@ const saucesCtrl = require("../controllers/sauces");
 // Les routes fonction des requêtes à l'API:
 
 router.get("/", auth, saucesCtrl.getAllSauces);
-router.get("/:id", auth, saucesCtrl.getOneSauce);
+// router.get("/:id", auth, saucesCtrl.getOneSauce);
 
-router.post('/', auth, multer, saucesCtrl.CreateSauce);
-router.post("/:id/like", auth, saucesCtrl.likeSauce);
+// router.post("/", auth, multer, saucesCtrl.initSauce);
+// router.post("/:id/like", auth, saucesCtrl.likeSauce);
 
-router.put("/:id", auth, multer, saucesCtrl.modifySauce);
+// router.put("/:id", auth, multer, saucesCtrl.modifySauce);
 
-router.delete("/:id", auth, saucesCtrl.deleteSauce);
-
+// router.delete("/:id", auth, saucesCtrl.deleteSauce);
 
 module.exports = router;
