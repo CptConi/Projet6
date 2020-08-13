@@ -15,7 +15,7 @@ const saucesRoutes = require("./routes/sauces");
 //Password >> piGWDRfWwp3VONBq
 mongoose
   .connect(
-    "mongodb+srv://So_Pekocko_Admin_Mongo:piGWDRfWwp3VONBq@sopekocko.nwyga.mongodb.net/<dbname>?retryWrites=true&w=majority",
+    "mongodb+srv://So_Pekocko_Admin_Mongo:piGWDRfWwp3VONBq@sopekocko.nwyga.mongodb.net/sopekocko?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-// app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use("/api/auth", userRoutes);
 app.use("/api/sauces", saucesRoutes);

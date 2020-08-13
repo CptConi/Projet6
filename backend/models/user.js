@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
-const uniqueValidator = require('mongoose-unique-validator');
+const uniqueValidator = require("mongoose-unique-validator");
 
-const userSchema = mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-});
+const userSchema = mongoose.Schema(
+  {
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+  },
+);
 
 //Assure qu'on aura qu'une seule entrée dans la DB avec cet adresse EMAIL.
 userSchema.plugin(uniqueValidator);
