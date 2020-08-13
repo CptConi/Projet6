@@ -39,6 +39,28 @@ exports.createSauce = (req, res, next) => {
     .then(() => res.status(201).json({ message: "Sauce initialisée" }))
     .catch((error) => res.status(400).json({ error }));
 };
+
+//  Met à jour la sauce avec l'identifiant fourni. 
+//  Si une image est téléchargée, capturez-la et mettez à jour l'image URL des sauces.
+//  Si aucun fichier n'est fourni, les détails de la sauce figurent directement dans
+//  le corps de la demande(req.body.name,req.body.heat etc). 
+//  Si un fichier est fourni, la sauce avec chaîne est en req.body.sauce
+exports.modifySauce = (req, res, next) => {
+  const sauceObject = req.file
+    ? {
+        ...JSON.parse(req.body.sauce),
+        imageUrl: `${req.protocol}://${req.get("host")}/images/${
+          req.file.filename
+        }`,
+      }
+    : { ...req.body };
+  Sauce.updateOne(
+    { _id: req.params.id },
+    { ...sauceObject, _id: req.params.id }
+  )
+    .then(() => res.status(200).json({ message: "Objet modifié" }))
+    .catch((error) => res.status(400).json({ error }));
+};
+
 // exports.likeSauce = (req, res, next) => {};
-// exports.modifySauce = (req, res, next) => {};
 // exports.deleteSauce = (req, res, next) => {};

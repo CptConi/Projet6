@@ -12,9 +12,10 @@ router.get("/", auth, saucesCtrl.getAllSauces);
 router.get("/:id", auth, saucesCtrl.getOneSauce);
 
 router.post("/", auth, multer, saucesCtrl.createSauce);
-// router.post("/:id/like", auth, saucesCtrl.likeSauce);
 
-// router.put("/:id", auth, multer, saucesCtrl.modifySauce);
+router.put("/:id", auth, multer, saucesCtrl.modifySauce);
+
+// router.post("/:id/like", auth, saucesCtrl.likeSauce);
 
 // router.delete("/:id", auth, saucesCtrl.deleteSauce);
 
