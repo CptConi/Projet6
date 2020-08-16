@@ -1,6 +1,7 @@
 const Sauce = require("../models/sauce");
 const fs = require("fs");
 const { restart } = require("nodemon");
+const { lintSyntaxError } = require("tslint/lib/verify/lintError");
 
 // Renvoie le tableau detoutes les sauces dansla base de données
 exports.getAllSauces = (req, res, next) => {
@@ -45,14 +46,25 @@ exports.createSauce = (req, res, next) => {
 //  le corps de la demande(req.body.name,req.body.heat etc).
 //  Si un fichier est fourni, la sauce avec chaîne est en req.body.sauce
 exports.modifySauce = (req, res, next) => {
-  const sauceObject = req.file
-    ? {
-        ...JSON.parse(req.body.sauce),
-        imageUrl: `${req.protocol}://${req.get("host")}/images/${
-          req.file.filename
-        }`,
-      }
-    : { ...req.body };
+  if (req.file) {
+    //Suppression de l'ancienne image dans le stockage serveur:
+    Sauce.findOne({ _id: req.params.id })
+      .then((sauce) => {
+        const filename = sauce.imageUrl.split("/images/")[1];
+        fs.unlink(`images/${filename}`, () => {});
+      })
+      .catch((error) => res.status(500).json({ error }));
+    sauceObject = {
+      //Une modif d'image est demandée
+      ...JSON.parse(req.body.sauce),
+      imageUrl: `${req.protocol}://${req.get("host")}/images/${
+        req.file.filename
+      }`,
+    };
+  } else {
+    sauceObject = { ...req.body };
+    //Modif d'infos texte uniquement
+  }
   Sauce.updateOne(
     { _id: req.params.id },
     { ...sauceObject, _id: req.params.id }
