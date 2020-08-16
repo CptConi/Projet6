@@ -37,7 +37,6 @@ exports.login = (req, res, next) => {
               expiresIn: "24h",
             }),
           });
-          console.log("Utilisateur loggé correctement avec id > " + user._id);
         })
         .catch((error) => res.status(500).json({ error }));
     })
