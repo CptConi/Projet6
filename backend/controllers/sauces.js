@@ -165,11 +165,20 @@ const undoLike = (pSauce, pReq, pRes) => {
   };
   deleteFromTab(sauceObject.usersLiked, pReq.body.userId);
   deleteFromTab(sauceObject.usersDisliked, pReq.body.userId);
+  //updating likes counters
+  updateLikeCounters(sauceObject);
   Sauce.updateOne(
     { _id: pReq.params.id },
-    { ...sauceObject, _id: pReq.params.id }
+    {
+      ...sauceObject,
+      _id: pReq.params.id,
+    }
   )
-    .then(() => pRes.status(200).json({ message: "Remise à zéro du like." }))
+    .then(() =>
+      pRes.status(200).json({
+        message: "Remise à zéro du like.",
+      })
+    )
     .catch((error) => pRes.status(500).json({ error }));
 };
 
