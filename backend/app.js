@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const { json } = require("body-parser");
 const path = require("path");
+// const mongoosemask= require("mongoosemask");
 
 const app = express();
 
@@ -11,8 +12,7 @@ const userRoutes = require("./routes/user");
 const saucesRoutes = require("./routes/sauces");
 
 //Connexion à la DB MongoDB:
-//Login: So_Pekocko_Admin_Mongo
-//Password >> piGWDRfWwp3VONBq
+//Accès BDD pour mentor validateur: Mentor_access || YfKe2XdFSl3eITyO
 mongoose
   .connect(
     "mongodb+srv://So_Pekocko_Admin_Mongo:piGWDRfWwp3VONBq@sopekocko.nwyga.mongodb.net/sopekocko?retryWrites=true&w=majority",
@@ -38,6 +38,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 app.use("/images", express.static(path.join(__dirname, "images")));
+// app.use(mongoosemask([""]));
 
 app.use("/api/auth", userRoutes);
 app.use("/api/sauces", saucesRoutes);

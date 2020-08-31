@@ -62,8 +62,8 @@ exports.modifySauce = (req, res, next) => {
       }`,
     };
   } else {
-    sauceObject = { ...req.body };
     //Modif d'infos texte uniquement
+    sauceObject = { ...req.body };
   }
   Sauce.updateOne(
     { _id: req.params.id },
